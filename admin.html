@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        /* General body styling and theme variables */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Light mode theme variables */
+        :root {
+            --bg-color-primary: #f4f7f6;
+            --bg-color-secondary: #ffffff;
+            --text-color: #333333;
+            --header-bg: #4a90e2;
+            --header-text: #ffffff;
+            --sidebar-bg: #e6e9ed;
+            --sidebar-link-color: #555555;
+            --footer-bg: #4a90e2;
+            --footer-text: #ffffff;
+            --border-color: #cccccc;
+        }
+
+        /* Dark mode theme variables */
+        body.dark-mode {
+            --bg-color-primary: #121212;
+            --bg-color-secondary: #1e1e1e;
+            --text-color: #e0e0e0;
+            --header-bg: #2a2a2a;
+            --header-text: #ffffff;
+            --sidebar-bg: #2a2a2a;
+            --sidebar-link-color: #b0b0b0;
+            --footer-bg: #2a2a2a;
+            --footer-text: #ffffff;
+            --border-color: #444444;
+        }
+
+        /* CSS Grid layout for the entire dashboard */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: auto 1fr auto;
+            grid-template-areas:
+                "header header"
+                "sidebar main"
+                "footer footer";
+            min-height: 100vh;
+            background-color: var(--bg-color-primary);
+        }
+
+        /* Header styling */
+        .header {
+            grid-area: header;
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        /* Theme switch styling */
+        .theme-switch {
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-switch input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            grid-area: sidebar;
+            background-color: var(--sidebar-bg);
+            color: var(--sidebar-link-color);
+            padding: 20px;
+            border-right: 1px solid var(--border-color);
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: var(--sidebar-link-color);
+            font-size: 1.1em;
+            display: block;
+            padding: 8px 0;
+            transition: color 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: var(--header-bg);
+        }
+
+        /* Main content area styling */
+        .main-content {
+            grid-area: main;
+            background-color: var(--bg-color-secondary);
+            color: var(--text-color);
+            padding: 20px;
+        }
+
+        .main-content h2 {
+            color: var(--header-bg);
+            margin-top: 0;
+        }
+
+        /* Footer styling */
+        .footer {
+            grid-area: footer;
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 15px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        
+        /* Media query for responsive design */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto 1fr auto;
+                grid-template-areas:
+                    "header"
+                    "sidebar"
+                    "main"
+                    "footer";
+            }
+            .sidebar {
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Admin Dashboard</h1>
+            <div class="theme-switch">
+                <input type="checkbox" id="theme-toggle">
+                <label for="theme-toggle">Dark Mode</label>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Users</a></li>
+                    <li><a href="#">Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <h2>Welcome, Admin!</h2>
+            <p>This is the main content area. Add charts, tables, or reports here.</p>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            &copy; 2025 Admin Panel
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+
+            // Check for saved theme in localStorage
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-mode');
+                themeToggle.checked = true;
+            }
+
+            // Listen for changes on the checkbox
+            themeToggle.addEventListener('change', () => {
+                if (themeToggle.checked) {
+                    body.classList.add('dark-mode');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    body.classList.remove('dark-mode');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
